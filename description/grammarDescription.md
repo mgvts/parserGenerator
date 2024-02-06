@@ -7,6 +7,16 @@ section `token` contains token name, and it parses rule
 name of token must be Upper case and `_` at least one symbol
 after name must be `:` and after it parses rule regExp style or string
 
+notes:
+- it passes one char u should wrap it into `'` single quotes, any other way u whould write RegEx
+- if u have similar regex/single char u should past most unique before other 
+  - (`\/\/` -> equal to js `RegEx('\/\/')` -> `/\/\//`)
+```
+LOG:      \/\/; 
+DIV:      '/';
+```
+ 
+
 example:
 ```
 @token {
