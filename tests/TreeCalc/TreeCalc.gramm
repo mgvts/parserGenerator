@@ -1,0 +1,52 @@
+grammar TreeCalc;
+
+@token {
+    OPEN_BR:  '(';
+    CLOSE_BR: ')';
+    SUB:      '-';
+    ADD:      '+';
+    MUL:      '*';
+    LOG:      \/\/;
+    DIV:      '/';
+}
+
+@token {
+    NUMBER: ([1-9][0-9]*|0) ;
+    WS:     [ \t\n\r]* -> skip ;
+    FUNC:   [a-zA-Z]+ ;
+}
+
+@dec {
+    e        @r[val];
+    e_ @a[i] @r[val];
+    t        @r[val];
+    t_ @a[i] @r[val];
+    k        @r[val];
+    k_ @a[i] @r[val];
+    f        @r[val];
+}
+
+@states {
+    e  -> t e_[$t.val]       { $val = {state:'e', terms: [$t.val, $e_.val]} } ;
+
+    e_ -> #                  { $val = {state: 'e_', terms: [] } } ;
+    e_ -> ADD t e_[$val]     { $val = {state:'e_', terms: [ $t.val,'ADD', $e_.val]} } ;
+    e_ -> SUB t  e_[$val]    { $val = {state:'e_', terms: [ $t.val,'SUB', $e_.val]} } ;
+
+    t  ->  k t_[$k.val]      { $val = {state:'t', terms: [$k.val, $t_.val]} } ;
+
+    t_ -> MUL k  t_[$val]    { $val = {state:'t_', terms: [$k.val, 'MUL', $t_.val]} }  ;
+    t_ -> DIV k  t_[$val]    { $val = {state:'t_', terms: [$k.val, 'DIV', $t_.val]} } ;
+    t_ -> #                  { $val = {state: 't_', terms: [] } } ;
+
+    k  -> f k_[$f.val]       { $val = {state:'k', terms: [$f.val, $k_.val]} } ;
+
+    k_ -> LOG k              { $val = {state:'k_', terms: ['LOG', $k.val]} } ;
+    k_ -> #                  { $val = {state: 'k_', terms: [] } } ;
+
+    f  -> OPEN_BR e CLOSE_BR { $val = {state:'f', terms: ['OPEN_BR', $e.val, 'CLOSE_BR']} } ;
+    f  -> NUMBER             { $val = {state:'f', terms: [{name:'NUMBER', value:+$NUMBER.text}]} } ;
+    f -> SUB f               { $val = {state:'f', terms: ['SUB', $f.val]} } ;
+    f -> FUNC f              { $val = {state:'f', terms: [{name:'FUNC', value:$FUNC.text}, $f.val]} } ;
+
+}
