@@ -58,37 +58,25 @@ function e() {
     case 'OPEN_BR': {
             cntx['t'] = t()
       cntx['e_'] = e_(cntx.t.val)
-      {
-       {cntx.val={state:'e', terms: [cntx.t.val, cntx.e_.val]}}
-      }
-      
+     {cntx.val={state:'e', terms: [cntx.t.val, cntx.e_.val]}}
         return {val:cntx.val}
       }
     case 'NUMBER': {
             cntx['t'] = t()
       cntx['e_'] = e_(cntx.t.val)
-      {
-       {cntx.val={state:'e', terms: [cntx.t.val, cntx.e_.val]}}
-      }
-      
+     {cntx.val={state:'e', terms: [cntx.t.val, cntx.e_.val]}}
         return {val:cntx.val}
       }
     case 'SUB': {
             cntx['t'] = t()
       cntx['e_'] = e_(cntx.t.val)
-      {
-       {cntx.val={state:'e', terms: [cntx.t.val, cntx.e_.val]}}
-      }
-      
+     {cntx.val={state:'e', terms: [cntx.t.val, cntx.e_.val]}}
         return {val:cntx.val}
       }
     case 'FUNC': {
             cntx['t'] = t()
       cntx['e_'] = e_(cntx.t.val)
-      {
-       {cntx.val={state:'e', terms: [cntx.t.val, cntx.e_.val]}}
-      }
-      
+     {cntx.val={state:'e', terms: [cntx.t.val, cntx.e_.val]}}
         return {val:cntx.val}
       }
     case 'EOF': {
@@ -114,10 +102,7 @@ function e_(i) {
           lex.nextToken()
       cntx['t'] = t()
       cntx['e_'] = e_(cntx.val)
-      {
-       {cntx.val={state:'e_', terms: [ cntx.t.val,'ADD', cntx.e_.val]}}
-      }
-      
+     {cntx.val={state:'e_', terms: [ cntx.t.val,'ADD', cntx.e_.val]}}
         return {val:cntx.val}
       }
     case 'SUB': {
@@ -125,10 +110,7 @@ function e_(i) {
           lex.nextToken()
       cntx['t'] = t()
       cntx['e_'] = e_(cntx.val)
-      {
-       {cntx.val={state:'e_', terms: [ cntx.t.val,'SUB', cntx.e_.val]}}
-      }
-      
+     {cntx.val={state:'e_', terms: [ cntx.t.val,'SUB', cntx.e_.val]}}
         return {val:cntx.val}
       }
     case 'EOF': {
@@ -154,37 +136,25 @@ function t() {
     case 'OPEN_BR': {
             cntx['k'] = k()
       cntx['t_'] = t_(cntx.k.val)
-      {
-       {cntx.val={state:'t', terms: [cntx.k.val, cntx.t_.val]}}
-      }
-      
+     {cntx.val={state:'t', terms: [cntx.k.val, cntx.t_.val]}}
         return {val:cntx.val}
       }
     case 'NUMBER': {
             cntx['k'] = k()
       cntx['t_'] = t_(cntx.k.val)
-      {
-       {cntx.val={state:'t', terms: [cntx.k.val, cntx.t_.val]}}
-      }
-      
+     {cntx.val={state:'t', terms: [cntx.k.val, cntx.t_.val]}}
         return {val:cntx.val}
       }
     case 'SUB': {
             cntx['k'] = k()
       cntx['t_'] = t_(cntx.k.val)
-      {
-       {cntx.val={state:'t', terms: [cntx.k.val, cntx.t_.val]}}
-      }
-      
+     {cntx.val={state:'t', terms: [cntx.k.val, cntx.t_.val]}}
         return {val:cntx.val}
       }
     case 'FUNC': {
             cntx['k'] = k()
       cntx['t_'] = t_(cntx.k.val)
-      {
-       {cntx.val={state:'t', terms: [cntx.k.val, cntx.t_.val]}}
-      }
-      
+     {cntx.val={state:'t', terms: [cntx.k.val, cntx.t_.val]}}
         return {val:cntx.val}
       }
     case 'ADD': {
@@ -216,10 +186,7 @@ function t_(i) {
           lex.nextToken()
       cntx['k'] = k()
       cntx['t_'] = t_(cntx.val)
-      {
-       {cntx.val={state:'t_', terms: [cntx.k.val, 'MUL', cntx.t_.val]}}
-      }
-      
+     {cntx.val={state:'t_', terms: [cntx.k.val, 'MUL', cntx.t_.val]}}
         return {val:cntx.val}
       }
     case 'DIV': {
@@ -227,10 +194,7 @@ function t_(i) {
           lex.nextToken()
       cntx['k'] = k()
       cntx['t_'] = t_(cntx.val)
-      {
-       {cntx.val={state:'t_', terms: [cntx.k.val, 'DIV', cntx.t_.val]}}
-      }
-      
+     {cntx.val={state:'t_', terms: [cntx.k.val, 'DIV', cntx.t_.val]}}
         return {val:cntx.val}
       }
     case 'ADD': {
@@ -264,37 +228,25 @@ function k() {
     case 'OPEN_BR': {
             cntx['f'] = f()
       cntx['k_'] = k_(cntx.f.val)
-      {
-       {cntx.val={state:'k', terms: [cntx.f.val, cntx.k_.val]}}
-      }
-      
+     {cntx.val={state:'k', terms: [cntx.f.val, cntx.k_.val]}}
         return {val:cntx.val}
       }
     case 'NUMBER': {
             cntx['f'] = f()
       cntx['k_'] = k_(cntx.f.val)
-      {
-       {cntx.val={state:'k', terms: [cntx.f.val, cntx.k_.val]}}
-      }
-      
+     {cntx.val={state:'k', terms: [cntx.f.val, cntx.k_.val]}}
         return {val:cntx.val}
       }
     case 'SUB': {
             cntx['f'] = f()
       cntx['k_'] = k_(cntx.f.val)
-      {
-       {cntx.val={state:'k', terms: [cntx.f.val, cntx.k_.val]}}
-      }
-      
+     {cntx.val={state:'k', terms: [cntx.f.val, cntx.k_.val]}}
         return {val:cntx.val}
       }
     case 'FUNC': {
             cntx['f'] = f()
       cntx['k_'] = k_(cntx.f.val)
-      {
-       {cntx.val={state:'k', terms: [cntx.f.val, cntx.k_.val]}}
-      }
-      
+     {cntx.val={state:'k', terms: [cntx.f.val, cntx.k_.val]}}
         return {val:cntx.val}
       }
     case 'MUL': {
@@ -331,10 +283,7 @@ function k_(i) {
       cntx['LOG'] = lex.curToken
           lex.nextToken()
       cntx['k'] = k()
-      {
-       {cntx.val={state:'k_', terms: ['LOG', cntx.k.val]}}
-      }
-      
+     {cntx.val={state:'k_', terms: ['LOG', cntx.k.val]}}
         return {val:cntx.val}
       }
     case 'MUL': {
@@ -379,39 +328,27 @@ function f() {
       cntx['e'] = e()
 cntx['CLOSE_BR'] = lex.curToken
           lex.nextToken()
-      {
-       {cntx.val={state:'f', terms: ['OPEN_BR', cntx.e.val, 'CLOSE_BR']}}
-      }
-      
+     {cntx.val={state:'f', terms: ['OPEN_BR', cntx.e.val, 'CLOSE_BR']}}
         return {val:cntx.val}
       }
     case 'NUMBER': {
       cntx['NUMBER'] = lex.curToken
           lex.nextToken()
-      {
-       {cntx.val={state:'f',terms:[{name:'NUMBER',value:+cntx.NUMBER.text}]}}
-      }
-      
+     {cntx.val={state:'f',terms:[{name:'NUMBER',value:+cntx.NUMBER.text}]}}
         return {val:cntx.val}
       }
     case 'SUB': {
       cntx['SUB'] = lex.curToken
           lex.nextToken()
       cntx['f'] = f()
-      {
-       {cntx.val={state:'f', terms: ['SUB', cntx.f.val]}}
-      }
-      
+     {cntx.val={state:'f', terms: ['SUB', cntx.f.val]}}
         return {val:cntx.val}
       }
     case 'FUNC': {
       cntx['FUNC'] = lex.curToken
           lex.nextToken()
       cntx['f'] = f()
-      {
-       {cntx.val={state:'f',terms:[{name:'FUNC',value:cntx.FUNC.text},cntx.f.val]}}
-      }
-      
+     {cntx.val={state:'f',terms:[{name:'FUNC',value:cntx.FUNC.text},cntx.f.val]}}
         return {val:cntx.val}
       }
     case 'LOG': {

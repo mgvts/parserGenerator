@@ -18,7 +18,7 @@ export type Token = {
 }
 
 export type DeclareMap = {
-  [key in RuleName]: DeclareRule
+  [key: RuleName]: DeclareRule
 }
 
 export type DeclareRule = {

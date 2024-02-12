@@ -64,7 +64,7 @@ const skipRule = new RegExp(Object.values(tokens)
             
 const createTerm = (name: TokenName, text?) => {return {name, text} as Token}
 
-export class CalcLexer {
+export class FailLexer {
   curPos: number
   curChar: string = ''
   curToken: Token | undefined;

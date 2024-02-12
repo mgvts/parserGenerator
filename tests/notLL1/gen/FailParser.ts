@@ -25,7 +25,7 @@ const follow = {
 	'e_': new Set(['EOF','CLOSE_BR']),
 	't': new Set(['ADD','SUB','EOF','CLOSE_BR']),
 	't_': new Set(['ADD','SUB','EOF','CLOSE_BR']),
-	'f': new Set(['MUL','DIV','ADD','SUB','EOF','CLOSE_BR']),
+	'f': new Set(['EOF','MUL','DIV','ADD','SUB','CLOSE_BR']),
 }
   
 
@@ -233,6 +233,9 @@ cntx['CLOSE_BR'] = lex.curToken
      { cntx.val = -cntx.f.val }
         return {val:cntx.val}
       }
+    case 'EOF': {
+      throw new ParseError()
+      }
     case 'MUL': {
       throw new ParseError()
       }
@@ -243,9 +246,6 @@ cntx['CLOSE_BR'] = lex.curToken
       throw new ParseError()
       }
     case 'SUB': {
-      throw new ParseError()
-      }
-    case 'EOF': {
       throw new ParseError()
       }
     case 'CLOSE_BR': {

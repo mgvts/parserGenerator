@@ -1,0 +1,42 @@
+grammar Calc;
+
+@token {
+    OPEN_BR:  '(';
+    CLOSE_BR: ')';
+    SUB:      '-';
+    ADD:      '+';
+    MUL:      '*';
+    DIV:      '/';
+}
+
+@token {
+    NUMBER: ([1-9][0-9]*|0) ;
+    WS:     [ \t\n\r]* -> skip ;
+}
+
+@dec {
+    e        @r[val];
+    e_ @a[i] @r[val];
+    t        @r[val];
+    t_ @a[i] @r[val];
+    f        @r[val];
+}
+
+@states {
+    e  ->  t e_[$t.val]                         { $val = $e_.val}        ;
+
+    e_ -> #                                     { $val = $i }            ;
+    e_ -> ADD t { $val = $i + $t.val } e_[$val] { $val = $e_.val }       ;
+    e_ -> ADD f      {badbad}                                                    ;
+    e_ -> SUB t { $val = $i - $t.val } e_[$val] { $val = $e_.val }       ;
+
+    t  ->  f t_[$f.val]                         { $val = $t_.val }       ;
+
+    t_ -> MUL f { $val = $i * $f.val } t_[$val] { $val = $t_.val }       ;
+    t_ -> DIV f { $val = $i / $f.val } t_[$val] { $val = $t_.val }       ;
+    t_ -> #                                     { $val = $i }            ;
+
+    f  -> OPEN_BR e CLOSE_BR                    { $val = $e.val }        ;
+    f  -> NUMBER                                { $val = +$NUMBER.text } ;
+    f  -> SUB f                                  { $val = -$f.val }      ;
+}

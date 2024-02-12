@@ -2,7 +2,7 @@ import fs from 'fs'
 import antlr4 from "antlr4";
 import grammLexer from "./generated-parser/grammLexer.ts";
 import grammParser from "./generated-parser/grammParser.ts";
-import {sout, toString, write} from "../utils/utils.ts";
+import {write} from "../utils/utils.ts";
 import {createLexer} from "./createLexer.ts";
 import {createParser} from "./createParser.ts";
 

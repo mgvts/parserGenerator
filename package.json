@@ -12,7 +12,8 @@
     "genAntlrCalc": "java -jar D:\\programs\\antlr4\\antlr-4.13.1-complete.jar -Dlanguage=TypeScript generator/antlr/grammParser.g4 generator/antlr/grammLexer.g4 -o generator/generated-parser",
     "calc-index": "npm run genAntlrCalc && ts-node-esm -T tests/Calc/index.ts",
     "tree-calc-index": "npm run generateParser && ts-node-esm -T tests/TreeCalc/index.ts",
-    "imgs": "ts-node-esm -T tests/TreeCalc/testImgs.ts"
+    "imgs": "ts-node-esm -T tests/TreeCalc/testImgs.ts",
+    "fail-index": "npm run generateParser && ts-node-esm -T tests/notLL1/index.ts"
   },
   "dependencies": {
     "@types/jest": "^29.5.10",

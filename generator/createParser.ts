@@ -184,6 +184,9 @@ function buildRuleMethod(r: Rule, firstSet: FFSet, followSet: FFSet, dec: Declar
       if (filterCodes.length == 0) {
         filterCodes = r.transition
       }
+      if (filterCodes.length > 1) {
+        throw Error(`Gramm is not LL1: multiple rules at ${r.name}`)
+      }
       let trRule = filterCodes[0]
       return `${trRule.transitionCode.map(cd => {
         if (typeof cd == 'object') {
@@ -191,10 +194,7 @@ function buildRuleMethod(r: Rule, firstSet: FFSet, followSet: FFSet, dec: Declar
             // cd: RuleApply
             return `      cntx['${cd.name}'] = ${cd.name}(${replaceDollar(cd.args)})`
           } else if (isCodeBlock(cd)) {
-            return `      {
-       ${replaceDollar(cd.code)}
-      }
-      `
+            return `     ${replaceDollar(cd.code)}`
           }
         } else if (typeof cd == 'string') {
           return `cntx['${cd}'] = lex.curToken
