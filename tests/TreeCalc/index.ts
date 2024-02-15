@@ -6,7 +6,7 @@ let gen = 'D:\\4sem\\mt\\mt4ll\\tests\\TreeCalc\\gen\\'
 
 let g = generate(path, gen)
 
-// sout(g)
+sout(g)
 
 // example to use
 

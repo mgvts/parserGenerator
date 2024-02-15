@@ -1,0 +1,25 @@
+grammar Calc;
+
+@token {
+    OPEN_BR:  '(';
+    CLOSE_BR: ')';
+    SUB:      '-';
+    ADD:      '+';
+    MUL:      '*';
+    DIV:      '/';
+}
+
+@token {
+    NUMBER: ([1-9][0-9]*|0) ;
+    WS:     [ \t\n\r]* -> skip ;
+}
+
+@dec {
+    e        @r[val];
+}
+
+@states {
+    e  ->  e ADD e        ;
+    e  ->  e MUL e        ;
+    e  -> NUMBER          ;
+}

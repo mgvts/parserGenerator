@@ -34,7 +34,7 @@ const buildEmpty = (rules) => Object.keys(rules).reduce(
   }, {}) as { [key: RuleName]: Set<TokenName> }
 
 type FFSet = {
-  [key in RuleName]: Set<TokenName>
+  [key: RuleName]: Set<TokenName>
 }
 
 export function constructFIRST(rules, tokens): FFSet {
@@ -178,9 +178,19 @@ function buildRuleMethod(r: Rule, firstSet: FFSet, followSet: FFSet, dec: Declar
     return s ? s.replaceAll('$', `cntx.`) : ''
   }
 
+  function getName(cd: TransitionCode): TokenName | RuleName {
+    if (isRuleApply(cd)) return cd.name
+    if (typeof cd == 'string') return cd
+    return null // codeBlock
+  }
+
   function generateWithFirst() {
     function getCaseCode(tokName: string): string {
-      let filterCodes = r.transition.filter((rule: TransitionRule) => rule.transitionCode[0] === tokName)
+      let filterCodes = r.transition.filter(
+        (rule: TransitionRule) =>
+          (firstSet[getName(rule.transitionCode[0]) || '']?? new Set())
+          .has(tokName))
+
       if (filterCodes.length == 0) {
         filterCodes = r.transition
       }
@@ -203,7 +213,7 @@ function buildRuleMethod(r: Rule, firstSet: FFSet, followSet: FFSet, dec: Declar
           throw new SynthesisError('multiple tokens not implemented')
         }
       }).join('\n')}
-        return ${dec.returns ? `{${dec.returns}:cntx.${dec.returns}}`: ''}`
+        return ${dec.returns ? `{${dec.returns}:cntx.${dec.returns}}` : ''}`
     }
 
     return Array.from(firstSet[r.name])
@@ -228,13 +238,13 @@ function buildRuleMethod(r: Rule, firstSet: FFSet, followSet: FFSet, dec: Declar
           .find((ar: TransitionCode[]) => {
             if (ar.find(el => el === '#')) {
               return ar
-            }else return false
-              }).map(el => {
-                if (isCodeBlock(el)) {
-                  return el.code
-                }
-          }).filter(e=>e).map(codeStr => replaceDollar(codeStr))}
-          return ${dec.returns ? `{${dec.returns}:cntx.${dec.returns}}`: ''}`
+            } else return false
+          }).map(el => {
+            if (isCodeBlock(el)) {
+              return el.code
+            }
+          }).filter(e => e).map(codeStr => replaceDollar(codeStr))}
+          return ${dec.returns ? `{${dec.returns}:cntx.${dec.returns}}` : ''}`
       } else {
         return 'throw new ParseError()'
         // throw new SynthesisError('')
@@ -277,7 +287,7 @@ export function createParser({name, tokens, rules, declare}: Gramm): string {
   const follow = constructFOLLOW(rls, first)
 
 
-  return`//@ts-nocheck
+  return `//@ts-nocheck
 import {${name}Lexer} from "./${name}Lexer.ts";
 
 let lex: ${name}Lexer;
