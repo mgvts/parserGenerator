@@ -8,8 +8,9 @@ export type TokenName = 'OPEN_BR'
 	| 'CLOSE_BR'
 	| 'SUB'
 	| 'ADD'
-	| 'MUL'
+	| 'POW'
 	| 'LOG'
+	| 'MUL'
 	| 'DIV'
 	| 'NUMBER'
 	| 'WS'
@@ -37,15 +38,20 @@ const tokens = {
 'validate' : /\+/,
 'isOneChar' : true,
 },
-'MUL' : {
-'name' : 'MUL',
-'validate' : /\*/,
-'isOneChar' : true,
+'POW' : {
+'name' : 'POW',
+'validate' : /\*\*/,
+'isOneChar' : false,
 },
 'LOG' : {
 'name' : 'LOG',
 'validate' : /\/\//,
 'isOneChar' : false,
+},
+'MUL' : {
+'name' : 'MUL',
+'validate' : /\*/,
+'isOneChar' : true,
 },
 'DIV' : {
 'name' : 'DIV',
@@ -117,6 +123,12 @@ export class TreeCalcLexer {
     const mt = subStr.match(skipRule)
     if (!mt || mt.index != 0) return
     this.curPos += mt[0].length
+  }
+
+  private POW() {
+    const re = tokens['POW'].validate
+    return createTerm('POW',
+     this.getSequence(re))
   }
 
   private LOG() {

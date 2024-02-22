@@ -10,11 +10,11 @@ sout(g)
 
 // example to use
 
-// import {parseExpr} from "./gen/TreeCalcParser.ts";
-// import {convertTokens, evaluateExpression} from "../../utils/parseTree.ts";
-//
-// const {val} = parseExpr('sin 1')
-// const converted = convertTokens(val)
-// sout(val)
-// sout(converted)
-// sout(evaluateExpression(converted))
+import {parseExpr} from "./gen/TreeCalcParser.ts";
+import {convertTokens, evaluateExpression} from "../../utils/parseTree.ts";
+
+const {val} = parseExpr('2**3**2')
+const converted = convertTokens(val)
+sout(val)
+sout(converted)
+sout(evaluateExpression(converted))

@@ -26,7 +26,9 @@ export function evaluateExpression(node: TreeCalc): number | undefined {
     }
     // right
     if (children.length == 2) {
-      if ((children[0] as Token).name != 'LOG') throw new Error("smt go wrong 2 args but not log:" + t)
+      if ((children[0] as Token).name != 'LOG' &&
+        (children[0] as Token).name != 'POW'
+      ) throw new Error("smt go wrong 2 args but not log:" + t)
 
       const foo = (children[0] as Token).value
       const v = evaluateExpression(children[1] as TreeCalc)
@@ -161,6 +163,7 @@ export const OperationToSymbol = {
 export function convertTokens(o: Object): TreeCalc {
   const TokensMap = {
     'LOG': (a, b) => Math.log(b) / Math.log(a),
+    'POW': Math.pow,
     'ADD': (a, b) => a + b,
     'SUB': (a, b) => a - b,
     'MUL': (a, b) => a * b,

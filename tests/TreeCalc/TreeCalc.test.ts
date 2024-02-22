@@ -13,6 +13,7 @@ const e = (s: string | number) => +eval(s + '')
 function log(x: number, y: number): number {
   return Math.log(y) / Math.log(x);
 }
+const pow = Math.pow
 
 const test = (s) => it(s, () => expect(t(s)).toEqual(e(s)));
 const test1 = (s, v) => it(s, () => expect(t(s)).toEqual(v));
@@ -111,5 +112,10 @@ describe('Tree calc tests', () => {
     test1('5//625', log(5, 625))
     test1('2//2//16', log(2, log(2, 16)))
     test1('2//2//16', 1 + log(2, log(2, 16)) + 1)
+  })
+  describe("pow tests", () => {
+    test1('2**8', pow(2, 8))
+    test1('7**3', pow(7, 3))
+    test1('2**3**2', pow(2, pow(3, 2)))
   })
 });

@@ -9,14 +9,15 @@ const first = {
 	't': new Set(['OPEN_BR','NUMBER','SUB','FUNC']),
 	't_': new Set(['MUL','DIV','#']),
 	'k': new Set(['OPEN_BR','NUMBER','SUB','FUNC']),
-	'k_': new Set(['LOG','#']),
+	'k_': new Set(['POW','LOG','#']),
 	'f': new Set(['OPEN_BR','NUMBER','SUB','FUNC']),
 	'OPEN_BR': new Set(['OPEN_BR']),
 	'CLOSE_BR': new Set(['CLOSE_BR']),
 	'SUB': new Set(['SUB']),
 	'ADD': new Set(['ADD']),
-	'MUL': new Set(['MUL']),
+	'POW': new Set(['POW']),
 	'LOG': new Set(['LOG']),
+	'MUL': new Set(['MUL']),
 	'DIV': new Set(['DIV']),
 	'NUMBER': new Set(['NUMBER']),
 	'WS': new Set(['WS']),
@@ -31,7 +32,7 @@ const follow = {
 	't_': new Set(['ADD','SUB','EOF','CLOSE_BR']),
 	'k': new Set(['MUL','DIV','ADD','SUB','EOF','CLOSE_BR']),
 	'k_': new Set(['MUL','DIV','ADD','SUB','EOF','CLOSE_BR']),
-	'f': new Set(['LOG','MUL','DIV','ADD','SUB','EOF','CLOSE_BR']),
+	'f': new Set(['POW','LOG','MUL','DIV','ADD','SUB','EOF','CLOSE_BR']),
 }
   
 
@@ -279,6 +280,13 @@ function k_(i) {
   cntx['i'] = i
   const token = lex.curToken
   switch (token.name) {
+    case 'POW': {
+      cntx['POW'] = lex.curToken
+          lex.nextToken()
+      cntx['k'] = k()
+     {cntx.val={state:'k_', terms: ['POW', cntx.k.val]}}
+        return {val:cntx.val}
+      }
     case 'LOG': {
       cntx['LOG'] = lex.curToken
           lex.nextToken()
@@ -350,6 +358,9 @@ cntx['CLOSE_BR'] = lex.curToken
       cntx['f'] = f()
      {cntx.val={state:'f',terms:[{name:'FUNC',value:cntx.FUNC.text},cntx.f.val]}}
         return {val:cntx.val}
+      }
+    case 'POW': {
+      throw new ParseError()
       }
     case 'LOG': {
       throw new ParseError()

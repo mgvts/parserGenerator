@@ -5,8 +5,9 @@ grammar TreeCalc;
     CLOSE_BR: ')';
     SUB:      '-';
     ADD:      '+';
-    MUL:      '*';
+    POW:      \*\*;
     LOG:      \/\/;
+    MUL:      '*';
     DIV:      '/';
 }
 
@@ -41,6 +42,7 @@ grammar TreeCalc;
 
     k  -> f k_[$f.val]       { $val = {state:'k', terms: [$f.val, $k_.val]} } ;
 
+    k_ -> POW k              { $val = {state:'k_', terms: ['POW', $k.val]} } ;
     k_ -> LOG k              { $val = {state:'k_', terms: ['LOG', $k.val]} } ;
     k_ -> #                  { $val = {state: 'k_', terms: [] } } ;
 
